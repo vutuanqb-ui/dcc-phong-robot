@@ -86,21 +86,23 @@ h1 em{font-style:italic;color:var(--gold)}
 .spot.active .node{animation:nodepulse 1.1s ease-in-out infinite}
 @keyframes nodepulse{0%,100%{box-shadow:0 0 14px rgba(230,183,86,.9)}50%{box-shadow:0 0 26px rgba(230,183,86,1),0 0 46px rgba(230,183,86,.7)}}
 
-/* chip hồ sơ chạy — kiểu công nghệ */
-.chip{position:absolute;z-index:6;left:0;top:0;transform:translate(-50%,-50%) scale(.5);
-  display:flex;align-items:center;gap:6px;padding:7px 13px;border-radius:8px;
-  background:rgba(8,13,30,.82);color:var(--gold-soft);font-weight:600;font-size:12px;letter-spacing:.5px;
-  border:1px solid var(--gold);backdrop-filter:blur(6px);
-  box-shadow:0 0 0 3px rgba(230,183,86,.16),0 0 26px rgba(230,183,86,.65);opacity:0;
-  transition:left .6s cubic-bezier(.5,0,.2,1),top .6s cubic-bezier(.5,0,.2,1),opacity .3s,transform .3s}
-.chip::before{content:"";position:absolute;inset:-1px;border-radius:8px;padding:1px;pointer-events:none;
-  background:conic-gradient(from 0deg,transparent,var(--gold),transparent 40%);
-  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
-  -webkit-mask-composite:xor;mask-composite:exclude;animation:spin 1.8s linear infinite;opacity:.9}
+/* chip hồ sơ chạy — hạt năng lượng nhỏ, công nghệ triệu tỷ năm sau */
+.chip{position:absolute;z-index:6;left:0;top:0;width:18px;height:18px;
+  transform:translate(-50%,-50%) scale(.3);display:flex;align-items:center;justify-content:center;
+  border-radius:50%;background:radial-gradient(circle,#fff 0%,var(--gold-soft) 35%,rgba(230,183,86,.25) 70%,transparent 100%);
+  box-shadow:0 0 10px rgba(230,183,86,.95),0 0 22px rgba(230,183,86,.6);opacity:0;
+  transition:left .55s cubic-bezier(.5,0,.2,1),top .55s cubic-bezier(.5,0,.2,1),opacity .3s,transform .3s}
+.chip i{font-style:normal;font-size:8px;line-height:1;filter:drop-shadow(0 0 2px rgba(0,0,0,.5))}
+/* viền quỹ đạo mảnh xoay */
+.chip::before{content:"";position:absolute;inset:-5px;border-radius:50%;pointer-events:none;
+  border:1px solid transparent;border-top-color:var(--gold);border-right-color:rgba(230,183,86,.4);
+  animation:spin 1.3s linear infinite}
+/* hào quang nhịp */
+.chip::after{content:"";position:absolute;inset:-3px;border-radius:50%;pointer-events:none;
+  box-shadow:0 0 0 1px rgba(230,183,86,.35);animation:halo 1.4s ease-out infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
+@keyframes halo{0%{transform:scale(.7);opacity:.9}100%{transform:scale(2.1);opacity:0}}
 .chip.show{opacity:1;transform:translate(-50%,-50%) scale(1)}
-.chip .dotpulse{width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 8px var(--gold);
-  animation:nodepulse 1s ease-in-out infinite}
 
 /* nút điều khiển */
 .sound{position:absolute;right:12px;bottom:12px;z-index:7;cursor:pointer;border:1px solid var(--line);
@@ -169,7 +171,7 @@ h1 em{font-style:italic;color:var(--gold)}
       <div class="bb">KHOANG XỬ LÝ HỒ SƠ TỰ ĐỘNG</div>
     </div>
     <!-- hotspots + chip được chèn bằng JS -->
-    <div class="chip" id="chip"><span class="dotpulse"></span>📄 Hồ sơ</div>
+    <div class="chip" id="chip"><i>📄</i></div>
     <button class="sound" id="sound">🔊 Bật tiếng</button>
   </div>
 
@@ -204,13 +206,13 @@ const ROBOTS=[
   desc:'Tiếp nhận mọi hồ sơ đối tác gửi lên website — ảnh giấy tờ, CV, scan PDF, file Word/Excel — và đưa vào hệ thống.'},
  {n:2,x:10,y:40,title:'Lưu trữ · Notion',role:'Xếp vào kho dữ liệu',tag:'Notion API',
   desc:'Sắp xếp hồ sơ mới vào kho Notion, gắn nhãn “Mới nhận” để chờ xử lý.'},
- {n:3,x:40,y:32.5,title:'Đọc & Soát · Claude',role:'Nhận diện & soát chính tả',tag:'Claude API',
+ {n:3,x:30,y:40,title:'Đọc & Soát · Claude',role:'Nhận diện & soát chính tả',tag:'Claude API',
   desc:'Claude đọc từng file, nhận diện loại giấy tờ (CV, hộ chiếu, bằng cấp, chứng chỉ) và soát lỗi chính tả Việt – Đức.'},
- {n:4,x:40,y:67.5,title:'Sửa ảnh tài liệu',role:'Xoay thẳng, làm sạch',tag:'Pillow · OCR',
+ {n:4,x:65,y:40,title:'Sửa ảnh tài liệu',role:'Xoay thẳng, làm sạch',tag:'Pillow · OCR',
   desc:'Xoay thẳng ảnh giấy tờ nghiêng, cắt mép, làm sạch & rõ nét; đổi Word/Excel sang PDF.'},
- {n:5,x:40,y:90,title:'Gộp PDF',role:'Gộp thành 1 file',tag:'pypdf',
+ {n:5,x:85,y:40,title:'Gộp PDF',role:'Gộp thành 1 file',tag:'pypdf',
   desc:'Gộp tất cả giấy tờ thành một PDF hoàn chỉnh: trang bìa + giấy tờ + trang ghi chú lỗi chính tả.'},
- {n:6,x:50,y:85,title:'Giao đi · Drive/Mail',role:'Lưu Drive + gửi mail',tag:'Drive · Gmail',
+ {n:6,x:85,y:70,title:'Giao đi · Drive/Mail',role:'Lưu Drive + gửi mail',tag:'Drive · Gmail',
   desc:'Lưu PDF vào Google Drive, gửi email cho anh và khách, rồi đánh dấu Notion “Đã xử lý”.'},
 ];
 
